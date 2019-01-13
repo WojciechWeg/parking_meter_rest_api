@@ -1,4 +1,4 @@
 package com.wojtek.parkingmeter.helpers;
 
-public class hasStartedJSON {
+public class HasStartedJSON {
 }

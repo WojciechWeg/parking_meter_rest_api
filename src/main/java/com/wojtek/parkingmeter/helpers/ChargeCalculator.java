@@ -1,4 +1,4 @@
 package com.wojtek.parkingmeter.helpers;
 
-public class sumJSON {
+public class ChargeCalculator {
 }
