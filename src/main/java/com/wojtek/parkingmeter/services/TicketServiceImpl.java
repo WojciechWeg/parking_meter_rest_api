@@ -1,13 +1,11 @@
 package com.wojtek.parkingmeter.services;
 
-import com.wojtek.parkingmeter.helpers.ChargeJSON;
-import com.wojtek.parkingmeter.helpers.HasStartedJSON;
-import com.wojtek.parkingmeter.helpers.SumJSON;
-import com.wojtek.parkingmeter.helpers.TicketType;
+import com.wojtek.parkingmeter.helpers.*;
 import com.wojtek.parkingmeter.model.Ticket;
 import com.wojtek.parkingmeter.repositories.TicketRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -40,7 +38,7 @@ public class TicketServiceImpl implements TicketService {
          stopTicket.setStampStop(LocalDateTime.now());
 
         //set charge here
-
+        stopTicket.setCharge(ChargeCalculator.charge(stopTicket.getTicketType(), Duration.between(stopTicket.getStampStop(),stopTicket.getStampStart())));
 
         return ticketRepository.save(stopTicket);
 
