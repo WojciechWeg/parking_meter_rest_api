@@ -1,8 +1,8 @@
 package com.wojtek.parkingmeter.repositories;
 
-import com.wojtek.parkingmeter.modelDAO.TicketDAO;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.wojtek.parkingmeter.model.Ticket;
+import org.springframework.data.repository.CrudRepository;
 
 
-public interface TicketRepository extends JpaRepository<TicketDAO,Long> {
+public interface TicketRepository extends CrudRepository<Ticket,Long> {
 }

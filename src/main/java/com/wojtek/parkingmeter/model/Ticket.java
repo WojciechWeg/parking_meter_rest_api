@@ -1,22 +1,23 @@
-package com.wojtek.parkingmeter.modelDAO;
+package com.wojtek.parkingmeter.model;
 
 
 import com.wojtek.parkingmeter.helpers.TicketType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="ticket")
 @Setter
 @Getter
-public class TicketDAO {
+public class Ticket {
 
-    public TicketDAO(TicketType ticketType, Timestamp stampStart, Timestamp stampStop) {
+    public Ticket() {
+    }
+
+    public Ticket(TicketType ticketType, LocalDateTime stampStart, LocalDateTime stampStop) {
         this.ticketType = ticketType;
         this.stampStart = stampStart;
         this.stampStop = stampStop;
@@ -33,10 +34,10 @@ public class TicketDAO {
     private double charge;
 
     @Column(name="stamp_start")
-    private Timestamp stampStart;
+    private LocalDateTime stampStart;
 
     @Column(name="stamp_stop")
-    private Timestamp stampStop;
+    private LocalDateTime stampStop;
 
 
 }
