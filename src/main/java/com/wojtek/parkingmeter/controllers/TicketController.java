@@ -1,9 +1,8 @@
 package com.wojtek.parkingmeter.controllers;
 
+import com.wojtek.parkingmeter.modelDTO.TicketDTO;
 import com.wojtek.parkingmeter.repositories.TicketRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TicketController {
@@ -15,8 +14,8 @@ public class TicketController {
         this.ticketRepository = ticketRepository;
     }
 
-    @GetMapping("/{id}/start")
-    public void startTicket(@PathVariable Long id){return;}
+    @PostMapping
+    public void startTicket(@RequestBody TicketDTO ticketDTO){return;}
 
     @GetMapping("/{id}/stop")
     public void stopTicket(@PathVariable Long id){return;}

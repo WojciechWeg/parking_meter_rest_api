@@ -1,22 +1,24 @@
 package com.wojtek.parkingmeter.modelDTO;
 
+import com.wojtek.parkingmeter.helpers.TicketType;
+
 public class TicketDTO {
 
 
-    private Long id;
+    private TicketType ticketType;
 
     public TicketDTO() {
     }
 
-    public TicketDTO(Long id) {
-        this.id = id;
+    public TicketDTO(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
-    public Long getId() {
-        return id;
+    public TicketType getTicketType() {
+        return ticketType;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 }
