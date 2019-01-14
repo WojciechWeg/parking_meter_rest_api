@@ -3,7 +3,6 @@ package com.wojtek.parkingmeter.controllers;
 import com.wojtek.parkingmeter.helpers.ChargeJSON;
 import com.wojtek.parkingmeter.helpers.HasStartedJSON;
 import com.wojtek.parkingmeter.helpers.SumJSON;
-import com.wojtek.parkingmeter.model.Ticket;
 import com.wojtek.parkingmeter.model.TicketDTO;
 import com.wojtek.parkingmeter.services.TicketService;
 import org.springframework.web.bind.annotation.*;

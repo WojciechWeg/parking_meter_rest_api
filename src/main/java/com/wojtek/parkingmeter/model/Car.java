@@ -28,7 +28,7 @@ public class Car {
     @Column(name="nr_plate")
     private String nr_plate;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", cascade = {CascadeType.ALL})
     @JsonIgnoreProperties(value = {"car"})
     private List<Ticket> tickets;
 

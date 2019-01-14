@@ -4,6 +4,7 @@ import com.wojtek.parkingmeter.helpers.*;
 import com.wojtek.parkingmeter.mapper.TicketMapper;
 import com.wojtek.parkingmeter.model.Car;
 import com.wojtek.parkingmeter.model.Ticket;
+
 import com.wojtek.parkingmeter.model.TicketDTO;
 import com.wojtek.parkingmeter.repositories.CarRepository;
 import com.wojtek.parkingmeter.repositories.TicketRepository;
@@ -51,9 +52,15 @@ public class TicketServiceImpl implements TicketService {
          Optional<Ticket> stopTicketOpt = ticketRepository.findById(id);
 
          Ticket stopTicket = stopTicketOpt.get();
-         stopTicket.setStampStop(LocalDateTime.now());
 
-        stopTicket.setCharge(ChargeCalculator.charge(stopTicket.getTicketType(), Duration.between(stopTicket.getStampStop(),stopTicket.getStampStart())));
+         stopTicket.setStampStop(LocalDateTime.now());
+         stopTicket.setCharge(ChargeCalculator.charge(stopTicket.getTicketType(), Duration.between(stopTicket.getStampStop(),stopTicket.getStampStart())));
+
+        Long id_car = stopTicket.getCar().getId();
+        carRepository.deleteById(id_car);
+
+
+        stopTicket.setCar(null);
 
         return ticketRepository.save(stopTicket);
 

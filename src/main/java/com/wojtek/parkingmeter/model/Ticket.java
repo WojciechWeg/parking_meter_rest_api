@@ -39,7 +39,7 @@ public class Ticket {
     @Column(name="stamp_stop")
     private LocalDateTime stampStop;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "car_id")
     @JsonIgnoreProperties
     private Car car;

@@ -6,6 +6,7 @@ import com.wojtek.parkingmeter.helpers.SumJSON;
 import com.wojtek.parkingmeter.model.Ticket;
 import com.wojtek.parkingmeter.model.TicketDTO;
 
+
 public interface TicketService {
 
     TicketDTO startTicket(String ticket_type, String nr_plate);
