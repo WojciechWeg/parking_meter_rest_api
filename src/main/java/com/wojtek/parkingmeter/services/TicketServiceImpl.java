@@ -81,6 +81,10 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public HasStartedJSON hasStarted() {
+
+
+
+
         return null;
     }
 }

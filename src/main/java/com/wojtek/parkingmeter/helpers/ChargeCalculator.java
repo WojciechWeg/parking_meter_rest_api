@@ -22,19 +22,17 @@ public class ChargeCalculator {
         Double hours = Math.ceil(duration);
         int hours_int = hours.intValue();
 
-        if(hours_int >= 1)
+        if(hours_int <= 1)
             charge=charge+1;
-        if(hours_int >= 2)
+        if(hours_int <= 2 && hours_int >= 1)
             charge=charge+2;
-        if(hours_int >= 3) {
-
+        if( hours_int >= 2) {
+            charge = 3;
             double last_price = 2;
 
-            for (int i = 3; i <= hours_int; i++) {
-
-                charge = charge + last_price*1.5;
+            for (int i = 2; i <= hours_int; i++) {
                 last_price = last_price * 1.5;
-
+                charge = charge + last_price;
             }
         }
         return charge;
@@ -46,16 +44,17 @@ public class ChargeCalculator {
         Double hours = Math.ceil(duration);
         int hours_int = hours.intValue();
 
-        if(hours_int >= 2)
-            charge=charge+2;
-        if(hours_int >= 3) {
 
+        if(hours_int <= 2 && hours_int >= 1)
+            charge=charge+2;
+        if( hours_int >= 2) {
+            charge = 2;
             double last_price = 2;
 
-            for (int i = 3; i <= hours_int; i++) {
-
-                charge = charge + last_price*1.2;
+            for (int i = 2; i <= hours_int; i++) {
                 last_price = last_price * 1.2;
+                charge = charge + last_price;
+
 
             }
         }

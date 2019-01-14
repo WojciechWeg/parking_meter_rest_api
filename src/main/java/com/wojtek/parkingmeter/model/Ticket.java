@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="ticket")
+@Table(name="tickets")
 @Setter
 @Getter
 public class Ticket {
@@ -38,6 +38,8 @@ public class Ticket {
 
     @Column(name="stamp_stop")
     private LocalDateTime stampStop;
+
+
 
 
 }
