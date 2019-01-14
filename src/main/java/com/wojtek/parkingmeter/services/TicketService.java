@@ -17,6 +17,6 @@ public interface TicketService {
 
     SumJSON checkSum();
 
-    HasStartedJSON hasStarted();
+    HasStartedJSON hasStarted(String nr_plate);
 
 }

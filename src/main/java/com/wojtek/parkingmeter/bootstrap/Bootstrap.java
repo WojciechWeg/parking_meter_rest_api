@@ -36,7 +36,10 @@ public class Bootstrap implements CommandLineRunner {
     }
 
     private void load_cars() {
+        Car car1 = new Car();
+        car1.setNr_plate("00000");
 
+        carRepository.save(car1);
     }
 
     private void load_tickets() {

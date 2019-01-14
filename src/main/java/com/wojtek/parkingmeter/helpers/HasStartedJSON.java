@@ -2,17 +2,17 @@ package com.wojtek.parkingmeter.helpers;
 
 public class HasStartedJSON {
 
-    String hsaStarted;
+    boolean hsaStarted;
 
-    public HasStartedJSON(String hsaStarted) {
+    public HasStartedJSON(boolean hsaStarted) {
         this.hsaStarted = hsaStarted;
     }
 
-    public String getHsaStarted() {
+    public boolean getHsaStarted() {
         return hsaStarted;
     }
 
-    public void setHsaStarted(String hsaStarted) {
+    public void setHsaStarted(boolean hsaStarted) {
         this.hsaStarted = hsaStarted;
     }
 }

@@ -29,8 +29,8 @@ public class TicketController {
     @GetMapping("/sum")
     public SumJSON checkSum(){return ticketService.checkSum();}
 
-    @GetMapping("/hasStarted")
-    public HasStartedJSON hasStarted(){return ticketService.hasStarted();}
+    @GetMapping("{nr_plate}/hasStarted/")
+    public HasStartedJSON hasStarted(@PathVariable String nr_plate){return ticketService.hasStarted(nr_plate);}
 
 
 }
