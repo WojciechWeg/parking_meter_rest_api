@@ -1,14 +1,17 @@
 package com.wojtek.parkingmeter.services;
 
 import com.wojtek.parkingmeter.helpers.*;
+import com.wojtek.parkingmeter.mapper.TicketMapper;
+import com.wojtek.parkingmeter.model.Car;
 import com.wojtek.parkingmeter.model.Ticket;
+import com.wojtek.parkingmeter.model.TicketDTO;
+import com.wojtek.parkingmeter.repositories.CarRepository;
 import com.wojtek.parkingmeter.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -17,26 +20,29 @@ import java.util.Optional;
 public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
-
-    @Autowired
-    private DataSource dataSource;
+    private final CarRepository carRepository;
+    private final TicketMapper ticketMapper;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
-
-    public TicketServiceImpl(TicketRepository ticketRepository) {
+    public TicketServiceImpl(TicketRepository ticketRepository, CarRepository carRepository, TicketMapper ticketMapper) {
         this.ticketRepository = ticketRepository;
+        this.carRepository = carRepository;
+        this.ticketMapper = ticketMapper;
     }
 
     @Override
-    public Ticket startTicket(String ticket_type) {
+    public TicketDTO startTicket(String ticket_type, String nr_plate) {
 
         Ticket newTicket = new Ticket( TicketType.valueOf(ticket_type.toUpperCase()), LocalDateTime.now(), LocalDateTime.of(0,1,1,0,0,0,0));
+        Car car = new Car(nr_plate);
+        car.addTicket(newTicket);
+        carRepository.save(car);
 
-        return  ticketRepository.save(newTicket);
+        ticketRepository.save(newTicket);
 
+        return ticketMapper.ticketToTicketDTO(newTicket);
     }
 
     @Override

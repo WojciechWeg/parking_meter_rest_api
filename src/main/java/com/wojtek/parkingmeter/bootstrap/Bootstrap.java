@@ -36,17 +36,7 @@ public class Bootstrap implements CommandLineRunner {
     }
 
     private void load_cars() {
-        Car car1 = new Car("Toyota","Corolla","WI23123");
-        carRepository.save(car1);
 
-        Car car2 = new Car("BMW","3","LU45230");
-        carRepository.save(car2);
-
-        Car car3 = new Car("Jaguar","XJ","WT00920");
-        carRepository.save(car3);
-
-        Car car4 = new Car("Ford","Focus","SC65091");
-        carRepository.save(car4);
     }
 
     private void load_tickets() {

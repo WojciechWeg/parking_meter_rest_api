@@ -1,56 +1,31 @@
 package com.wojtek.parkingmeter.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wojtek.parkingmeter.helpers.TicketType;
-import lombok.Getter;
-import lombok.Setter;
 
-import javax.persistence.*;
+
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name="tickets")
 
-public class Ticket {
+public class TicketDTO {
 
-    public Ticket() {
+
+    public TicketDTO() {
     }
 
-    public Ticket(TicketType ticketType, LocalDateTime stampStart, LocalDateTime stampStop) {
+    public TicketDTO(TicketType ticketType, double charge, LocalDateTime stampStart, LocalDateTime stampStop) {
         this.ticketType = ticketType;
+        this.charge = charge;
         this.stampStart = stampStart;
         this.stampStop = stampStop;
     }
 
-    @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name="ticket_type")
     private TicketType ticketType;
 
-    @Column(name="charge")
     private double charge;
 
-    @Column(name="stamp_start")
     private LocalDateTime stampStart;
 
-    @Column(name="stamp_stop")
     private LocalDateTime stampStop;
-
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    @JsonIgnoreProperties
-    private Car car;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public TicketType getTicketType() {
         return ticketType;
@@ -82,13 +57,5 @@ public class Ticket {
 
     public void setStampStop(LocalDateTime stampStop) {
         this.stampStop = stampStop;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
     }
 }

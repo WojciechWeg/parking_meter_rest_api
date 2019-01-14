@@ -4,6 +4,7 @@ import com.wojtek.parkingmeter.helpers.ChargeJSON;
 import com.wojtek.parkingmeter.helpers.HasStartedJSON;
 import com.wojtek.parkingmeter.helpers.SumJSON;
 import com.wojtek.parkingmeter.model.Ticket;
+import com.wojtek.parkingmeter.model.TicketDTO;
 import com.wojtek.parkingmeter.services.TicketService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping("/start/{ticket_type}")
-    public Ticket startTicket(@PathVariable String ticket_type){return ticketService.startTicket(ticket_type);}
+    @GetMapping("/start/{ticket_type}/{nr_plate}")
+    public TicketDTO startTicket(@PathVariable String ticket_type, @PathVariable String nr_plate){return ticketService.startTicket(ticket_type,nr_plate);}
 
     @GetMapping("/{id}/stop")
     public void stopTicket(@PathVariable Long id){ticketService.stopTicket(id);}
