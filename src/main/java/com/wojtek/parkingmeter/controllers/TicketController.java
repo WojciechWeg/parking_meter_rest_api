@@ -20,16 +20,16 @@ public class TicketController {
     @GetMapping("/start/{ticket_type}/{nr_plate}")
     public TicketDTO startTicket(@PathVariable String ticket_type, @PathVariable String nr_plate){return ticketService.startTicket(ticket_type,nr_plate);}
 
-    @GetMapping("/{id}/stop")
+    @GetMapping("/stop/{id}")
     public void stopTicket(@PathVariable Long id){ticketService.stopTicket(id);}
 
-    @GetMapping("/{id}/check_charge")
+    @GetMapping("/check_charge/{id}")
     public ChargeJSON checkCharge(@PathVariable Long id){return ticketService.checkCharge(id);}
 
     @GetMapping("/sum")
     public SumJSON checkSum(){return ticketService.checkSum();}
 
-    @GetMapping("{nr_plate}/hasStarted/")
+    @GetMapping("/hasStarted/{nr_plate}")
     public HasStartedJSON hasStarted(@PathVariable String nr_plate){return ticketService.hasStarted(nr_plate);}
 
 
