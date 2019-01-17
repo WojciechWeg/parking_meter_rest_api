@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -59,8 +60,11 @@ public class TicketServiceImpl implements TicketService {
          stopTicket.countCharge();
 
 
-        Long id_car = stopTicket.getCar().getId();
-        carRepository.deleteById(id_car);
+        if(!(stopTicket.getCar()==null)) {
+            Long id_car = stopTicket.getCar().getId();
+            carRepository.deleteById(id_car);
+        }
+
 
 
         stopTicket.setCar(null);
