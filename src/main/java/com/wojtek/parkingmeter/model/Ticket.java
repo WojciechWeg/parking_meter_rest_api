@@ -2,9 +2,11 @@ package com.wojtek.parkingmeter.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.wojtek.parkingmeter.helpers.ChargeCalculator;
 import com.wojtek.parkingmeter.helpers.TicketType;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
@@ -89,4 +91,8 @@ public class Ticket {
     public void setCar(Car car) {
         this.car = car;
     }
+
+    public void countCharge() { setCharge(ChargeCalculator.charge(getTicketType(), getDuration())); }
+
+    public Duration getDuration(){ return Duration.between(stampStart,stampStop); }
 }

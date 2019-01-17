@@ -2,15 +2,15 @@ package com.wojtek.parkingmeter.helpers;
 
 import java.time.Duration;
 
+
 public class ChargeCalculator {
 
     public static double charge(TicketType ticketType, Duration duration){
 
-
-        if(ticketType.toString().toUpperCase().equals("REGULAR"))
+        if(TicketType.REGULAR.equals(ticketType))
              return regular(Math.abs(duration.toHours()));
 
-        if(ticketType.toString().toUpperCase().equals("DISABLED"))
+        if(TicketType.DISABLED.equals(ticketType))
             return  disabled(Math.abs(duration.toHours()));
 
         return -1.0;

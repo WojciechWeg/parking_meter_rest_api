@@ -54,7 +54,9 @@ public class TicketServiceImpl implements TicketService {
          Ticket stopTicket = stopTicketOpt.get();
 
          stopTicket.setStampStop(LocalDateTime.now());
-         stopTicket.setCharge(ChargeCalculator.charge(stopTicket.getTicketType(), Duration.between(stopTicket.getStampStop(),stopTicket.getStampStart())));
+
+         stopTicket.countCharge();
+
 
         Long id_car = stopTicket.getCar().getId();
         carRepository.deleteById(id_car);
@@ -76,9 +78,9 @@ public class TicketServiceImpl implements TicketService {
         ticket.setStampStop(LocalDateTime.now());
 
         TicketType ticketType = ticket.getTicketType();
-        Duration duration = Duration.between(ticket.getStampStop(),ticket.getStampStart());
 
-        ChargeJSON chargeJSON = new ChargeJSON(ChargeCalculator.charge(ticketType,duration));
+
+        ChargeJSON chargeJSON = new ChargeJSON(ChargeCalculator.charge(ticketType, ticket.getDuration()));
 
         return chargeJSON;
     }
