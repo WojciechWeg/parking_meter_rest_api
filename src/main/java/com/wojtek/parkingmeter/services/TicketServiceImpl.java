@@ -1,6 +1,8 @@
 package com.wojtek.parkingmeter.services;
 
 import com.wojtek.parkingmeter.helpers.*;
+import com.wojtek.parkingmeter.helpers.enums.HasStartedEnum;
+import com.wojtek.parkingmeter.helpers.enums.TicketType;
 import com.wojtek.parkingmeter.mapper.TicketMapper;
 import com.wojtek.parkingmeter.model.Car;
 import com.wojtek.parkingmeter.model.Ticket;
@@ -13,7 +15,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket stopTicket(Long id) {
+    public void stopTicket(Long id) {
 
          Optional<Ticket> stopTicketOpt = ticketRepository.findById(id);
 
@@ -64,25 +65,27 @@ public class TicketServiceImpl implements TicketService {
 
         stopTicket.setCar(null);
 
-        return ticketRepository.save(stopTicket);
+         ticketRepository.save(stopTicket);
 
     }
 
     @Override
-    public ChargeJSON checkCharge(Long id) {
+    public String checkCharge(Long id) {
 
         Optional<Ticket> ticketOptional = ticketRepository.findById(id);
 
 
         Ticket ticket = ticketOptional.get();
-        ticket.setStampStop(LocalDateTime.now());
+
+        if(!(ticket.getCar()==null))
+            ticket.setStampStop(LocalDateTime.now());
 
         TicketType ticketType = ticket.getTicketType();
 
 
-        ChargeJSON chargeJSON = new ChargeJSON(ChargeCalculator.charge(ticketType, ticket.getDuration()));
+        String charge =  Double.toString(ChargeCalculator.charge(ticketType, ticket.getDuration()));
 
-        return chargeJSON;
+        return charge;
     }
 
     @Override
@@ -97,11 +100,18 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public HasStartedJSON hasStarted(String nr_plate) {
 
-        HasStartedJSON hasStartedJSON = new HasStartedJSON(false);
+        HasStartedJSON hasStartedJSON = new HasStartedJSON(HasStartedEnum.YES);
 
-        // pobierz id samochodu którego znamy numery tablicy rejestracujnej
-        Integer id = jdbcTemplate.queryForObject(
-                "SELECT ID FROM CARS WHERE NR_PLATE = \'"+ nr_plate +"\'", Integer.class);
+        Integer id = new Integer(0);
+
+        try {
+            // pobierz id samochodu którego znamy numery tablicy rejestracujnej
+             id = jdbcTemplate.queryForObject(
+                    "SELECT ID FROM CARS WHERE NR_PLATE = \'"+ nr_plate +"\'", Integer.class);
+        }catch (EmptyResultDataAccessException e){
+            hasStartedJSON.setHasStarted(HasStartedEnum.NO);
+        }
+
 
         Integer ticketID  = new Integer(0);
         // pobierzmy id biletu takiego samochodu
@@ -110,13 +120,13 @@ public class TicketServiceImpl implements TicketService {
         }catch (EmptyResultDataAccessException e){
             // jesli ticketID == null to znaczy że auto jest na parkingu bez biletu
             if(ticketID.equals(0))
-                hasStartedJSON.setHsaStarted(false);
+                hasStartedJSON.setHasStarted(HasStartedEnum.NO);
             // jeśłi ticketID != null to znaczy że auto ma bilet
 
         }
 
         if(!ticketID.equals(0))
-            hasStartedJSON.setHsaStarted(true);
+            hasStartedJSON.setHasStarted(HasStartedEnum.YES);
 
         return hasStartedJSON;
     }

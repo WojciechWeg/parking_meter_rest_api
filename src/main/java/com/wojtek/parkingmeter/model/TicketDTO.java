@@ -1,6 +1,6 @@
 package com.wojtek.parkingmeter.model;
 
-import com.wojtek.parkingmeter.helpers.TicketType;
+import com.wojtek.parkingmeter.helpers.enums.TicketType;
 
 
 import java.time.LocalDateTime;
@@ -12,11 +12,11 @@ public class TicketDTO {
     public TicketDTO() {
     }
 
-    public TicketDTO(TicketType ticketType, double charge, LocalDateTime stampStart, LocalDateTime stampStop) {
+    public TicketDTO(TicketType ticketType, double charge, LocalDateTime stampStart) {
         this.ticketType = ticketType;
         this.charge = charge;
         this.stampStart = stampStart;
-        this.stampStop = stampStop;
+
     }
 
     private TicketType ticketType;
@@ -25,7 +25,8 @@ public class TicketDTO {
 
     private LocalDateTime stampStart;
 
-    private LocalDateTime stampStop;
+
+    private Long id;
 
     public TicketType getTicketType() {
         return ticketType;
@@ -51,11 +52,12 @@ public class TicketDTO {
         this.stampStart = stampStart;
     }
 
-    public LocalDateTime getStampStop() {
-        return stampStop;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setStampStop(LocalDateTime stampStop) {
-        this.stampStop = stampStop;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -1,18 +1,20 @@
 package com.wojtek.parkingmeter.helpers;
 
+import com.wojtek.parkingmeter.helpers.enums.HasStartedEnum;
+
 public class HasStartedJSON {
 
-    boolean hsaStarted;
+    HasStartedEnum hasStarted;
 
-    public HasStartedJSON(boolean hsaStarted) {
-        this.hsaStarted = hsaStarted;
+    public HasStartedJSON(HasStartedEnum hasStarted) {
+        this.hasStarted = hasStarted;
     }
 
-    public boolean getHsaStarted() {
-        return hsaStarted;
+    public HasStartedEnum getHasStarted() {
+        return hasStarted;
     }
 
-    public void setHsaStarted(boolean hsaStarted) {
-        this.hsaStarted = hsaStarted;
+    public void setHasStarted(HasStartedEnum hasStarted) {
+        this.hasStarted = hasStarted;
     }
 }

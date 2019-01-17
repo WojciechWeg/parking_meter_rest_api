@@ -1,7 +1,7 @@
 package com.wojtek.parkingmeter.bootstrap;
 
 import com.wojtek.parkingmeter.helpers.ChargeCalculator;
-import com.wojtek.parkingmeter.helpers.TicketType;
+import com.wojtek.parkingmeter.helpers.enums.TicketType;
 import com.wojtek.parkingmeter.model.Car;
 import com.wojtek.parkingmeter.model.Ticket;
 import com.wojtek.parkingmeter.repositories.CarRepository;
