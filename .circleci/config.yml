@@ -1,0 +1,7 @@
+jobs:	jobs:
+  build:	  build:
+    docker:	    docker:
+      - image: circleci/openjdk:8-jdk-browsers	      - image: circleci/openjdk:8-jdk
+    steps:	    steps:
+      - checkout	      - checkout
+      - run: echo "A first hello"
