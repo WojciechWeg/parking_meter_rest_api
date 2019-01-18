@@ -49,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void stopTicket(Long id) {
+    public Ticket stopTicket(Long id) {
 
          Optional<Ticket> stopTicketOpt = ticketRepository.findById(id);
 
@@ -69,7 +69,7 @@ public class TicketServiceImpl implements TicketService {
 
         stopTicket.setCar(null);
 
-         ticketRepository.save(stopTicket);
+         return ticketRepository.save(stopTicket);
 
     }
 

@@ -26,7 +26,7 @@ public class TicketController {
 
 
         if (ticketService.hasStarted(nr_plate).getHasStarted().equals(HasStartedEnum.YES))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new TicketDTO());
+            return ResponseEntity.status(HttpStatus.IM_USED).body(new TicketDTO()); // tutaj bym zwrócił info że takkie auto ma już bilet. Użyłem HttpStatus.IM_USED, ale to nie do tego.
         if (ValidateNewTicket.validate(ticket_type, nr_plate))
             return ResponseEntity.ok().body(ticketService.startTicket(ticket_type, nr_plate));
         else
@@ -61,19 +61,19 @@ public class TicketController {
     }
 
     @GetMapping("/sum")
-    public SumJSON checkSum() {
-        return ticketService.checkSum();
+    public ResponseEntity<SumJSON> checkSum() {
+        return ResponseEntity.ok(ticketService.checkSum());
     }
 
     @GetMapping("/hasStarted/{nr_plate}")
     public ResponseEntity<HasStartedJSON> hasStarted(@PathVariable String nr_plate) {
 
-        try {
-            return ResponseEntity.ok(ticketService.hasStarted(nr_plate));
-        } catch (EmptyResultDataAccessException e) {
-            HasStartedJSON hsj = new HasStartedJSON(HasStartedEnum.NO_SUCH_CAR);
+        if(nr_plate.length() != 5) {
+            HasStartedJSON hsj = new HasStartedJSON(HasStartedEnum.INVALID_NR_PLATE);
             return ResponseEntity.badRequest().body(hsj);
         }
+
+        return ResponseEntity.ok(ticketService.hasStarted(nr_plate));
 
     }
 
