@@ -9,7 +9,7 @@ jobs:
         - checkout
         
         - restore_cache:
-          key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
+            key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
         
         - run: mvn dependency:go-offline
       
