@@ -3,8 +3,8 @@ package com.wojtek.parkingmeter.model;
 import com.wojtek.parkingmeter.helpers.enums.TicketType;
 
 
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
 
 public class TicketDTO {
 
@@ -50,7 +50,6 @@ public class TicketDTO {
     public void setStampStart(LocalDateTime stampStart) {
         this.stampStart = stampStart;
     }
-
 
     public Long getId() {
         return id;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wojtek.parkingmeter.helpers.ChargeCalculator;
 import com.wojtek.parkingmeter.helpers.enums.TicketType;
 
+
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;

@@ -33,7 +33,7 @@ public class TicketController {
         if (Validator.validateNewTicket(ticket_type, nr_plate))
             return ResponseEntity.ok().body(ticketService.startTicket(ticket_type, nr_plate));
         else
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new TicketDTO());
+            return ResponseEntity.badRequest().body(new TicketDTO());
 
     }
 
@@ -43,14 +43,13 @@ public class TicketController {
         if (!Validator.checkIfAlreadyStarted(jdbcTemplate, id))
             return ResponseEntity.ok().body("TICKET ALREADY STOPPED");
         if (!Validator.checkIfExists(jdbcTemplate, id))
-            return ResponseEntity.ok().body("TICKET DOES NOT EXIST");
+            return ResponseEntity.badRequest().body("TICKET DOES NOT EXIST");
 
         try {
             ticketService.stopTicket(id);
             return ResponseEntity.ok().body("TICKET STOPPED");
         } catch (NoSuchElementException e) {
-            String noSuchTicket = "No such ticket.";
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(noSuchTicket);
+            return ResponseEntity.badRequest().body("TICKET DOES NOT EXIST");
         }
 
     }
@@ -61,8 +60,8 @@ public class TicketController {
         try {
             return ResponseEntity.ok(ticketService.checkCharge(id));
         } catch (NoSuchElementException e) {
-            String noSuchTicket = "No such ticket.";
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(noSuchTicket);
+            String noSuchTicket = "TICKET DOES NOT EXIST";
+            return ResponseEntity.badRequest().body(noSuchTicket);
         }
 
     }

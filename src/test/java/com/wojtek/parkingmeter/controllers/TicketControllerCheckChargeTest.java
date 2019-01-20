@@ -39,11 +39,11 @@ public class TicketControllerCheckChargeTest {
 
 
     @Test
-    public void shouldReturn204() throws Exception {
+    public void shouldReturnTICKET_DOES_NOT_EXIST() throws Exception {
 
         this.mockMvc.perform(get("/check_charge/29999"))
-                .andExpect(content().string("No such ticket."))
-                .andExpect(status().is(204));
+                .andExpect(content().string("TICKET DOES NOT EXIST"))
+                .andExpect(status().is(400));
     }
 
 }

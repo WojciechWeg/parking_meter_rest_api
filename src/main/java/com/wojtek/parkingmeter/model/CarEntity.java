@@ -2,13 +2,13 @@ package com.wojtek.parkingmeter.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "cars")
-
 public class CarEntity {
 
     public CarEntity() {

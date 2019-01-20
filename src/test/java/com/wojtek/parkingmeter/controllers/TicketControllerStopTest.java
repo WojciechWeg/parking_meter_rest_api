@@ -36,7 +36,7 @@ public class TicketControllerStopTest {
     public void shouldReturnTICKET_DOES_NOT_EXIST() throws Exception {
 
         this.mockMvc.perform(get("/stop/666"))
-                .andExpect(status().is(200))
+                .andExpect(status().is(400))
                 .andExpect(content().string("TICKET DOES NOT EXIST"));
     }
 
