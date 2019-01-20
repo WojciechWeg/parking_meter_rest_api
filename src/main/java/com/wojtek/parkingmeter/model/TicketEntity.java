@@ -10,39 +10,39 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="tickets")
+@Table(name = "tickets")
 
-public class Ticket {
+public class TicketEntity {
 
-    public Ticket() {
+    public TicketEntity() {
     }
 
-    public Ticket(TicketType ticketType, LocalDateTime stampStart, LocalDateTime stampStop) {
+    public TicketEntity(TicketType ticketType, LocalDateTime stampStart, LocalDateTime stampStop) {
         this.ticketType = ticketType;
         this.stampStart = stampStart;
         this.stampStop = stampStop;
     }
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="ticket_type")
+    @Column(name = "ticket_type")
     private TicketType ticketType;
 
-    @Column(name="charge")
+    @Column(name = "charge")
     private double charge;
 
-    @Column(name="stamp_start")
+    @Column(name = "stamp_start")
     private LocalDateTime stampStart;
 
-    @Column(name="stamp_stop")
+    @Column(name = "stamp_stop")
     private LocalDateTime stampStop;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "car_id")
     @JsonIgnoreProperties
-    private Car car;
+    private CarEntity carEntity;
 
     public Long getId() {
         return id;
@@ -84,15 +84,19 @@ public class Ticket {
         this.stampStop = stampStop;
     }
 
-    public Car getCar() {
-        return car;
+    public CarEntity getCarEntity() {
+        return carEntity;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCarEntity(CarEntity carEntity) {
+        this.carEntity = carEntity;
     }
 
-    public void countCharge() { setCharge(ChargeCalculator.charge(getTicketType(), getDuration())); }
+    public void countCharge() {
+        setCharge(ChargeCalculator.charge(getTicketType(), getDuration()));
+    }
 
-    public Duration getDuration(){ return Duration.between(stampStart,stampStop); }
+    public Duration getDuration() {
+        return Duration.between(stampStart, stampStop);
+    }
 }

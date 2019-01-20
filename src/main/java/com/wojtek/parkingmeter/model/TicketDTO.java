@@ -25,7 +25,6 @@ public class TicketDTO {
 
     private LocalDateTime stampStart;
 
-
     private Long id;
 
     public TicketType getTicketType() {

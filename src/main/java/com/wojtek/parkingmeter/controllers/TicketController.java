@@ -4,9 +4,10 @@ import com.wojtek.parkingmeter.helpers.*;
 import com.wojtek.parkingmeter.helpers.enums.HasStartedEnum;
 import com.wojtek.parkingmeter.model.TicketDTO;
 import com.wojtek.parkingmeter.services.TicketService;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
@@ -14,6 +15,8 @@ import java.util.NoSuchElementException;
 @RestController
 public class TicketController {
 
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     private final TicketService ticketService;
 
@@ -26,8 +29,8 @@ public class TicketController {
 
 
         if (ticketService.hasStarted(nr_plate).getHasStarted().equals(HasStartedEnum.YES))
-            return ResponseEntity.status(HttpStatus.IM_USED).body(new TicketDTO()); // tutaj bym zwrócił info że takkie auto ma już bilet. Użyłem HttpStatus.IM_USED, ale to nie do tego.
-        if (ValidateNewTicket.validate(ticket_type, nr_plate))
+            return ResponseEntity.status(HttpStatus.IM_USED).body(new TicketDTO()); // tutaj bym zwrócił info że takkie auto ma już bilet. Użyłem HttpStatus.IM_USED, ale chyba to nie do tego.
+        if (Validator.validateNewTicket(ticket_type, nr_plate))
             return ResponseEntity.ok().body(ticketService.startTicket(ticket_type, nr_plate));
         else
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new TicketDTO());
@@ -37,6 +40,10 @@ public class TicketController {
     @GetMapping("/stop/{id}")
     public ResponseEntity<String> stopTicket(@PathVariable Long id) {
 
+        if (!Validator.checkIfAlreadyStarted(jdbcTemplate, id))
+            return ResponseEntity.ok().body("TICKET ALREADY STOPPED");
+        if (!Validator.checkIfExists(jdbcTemplate, id))
+            return ResponseEntity.ok().body("TICKET DOES NOT EXIST");
 
         try {
             ticketService.stopTicket(id);
@@ -68,7 +75,7 @@ public class TicketController {
     @GetMapping("/hasStarted/{nr_plate}")
     public ResponseEntity<HasStartedJSON> hasStarted(@PathVariable String nr_plate) {
 
-        if(nr_plate.length() != 5) {
+        if (nr_plate.length() != 5) {
             HasStartedJSON hsj = new HasStartedJSON(HasStartedEnum.INVALID_NR_PLATE);
             return ResponseEntity.badRequest().body(hsj);
         }

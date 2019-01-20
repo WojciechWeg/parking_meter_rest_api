@@ -7,28 +7,28 @@ import java.time.Duration;
 
 public class ChargeCalculator {
 
-    public static double charge(TicketType ticketType, Duration duration){
+    public static double charge(TicketType ticketType, Duration duration) {
 
-        if(TicketType.REGULAR == ticketType)
-             return regular(Math.abs(duration.toHours()));
+        if (TicketType.REGULAR == ticketType)
+            return regular(Math.abs(duration.toHours()));
 
-        if(TicketType.DISABLED.equals(ticketType))
-            return  disabled(Math.abs(duration.toHours()));
+        if (TicketType.DISABLED.equals(ticketType))
+            return disabled(Math.abs(duration.toHours()));
 
         return -1.0;
     }
 
-    static double regular(Long duration){
+    static double regular(Long duration) {
 
-        double charge=0.0;
+        double charge = 0.0;
         Double hours = Math.ceil(duration);
         int hours_int = hours.intValue();
 
-        if(hours_int <= 1)
-            charge=charge+1;
-        if(hours_int <= 2 && hours_int >= 1)
-            charge=charge+2;
-        if( hours_int >= 2) {
+        if (hours_int <= 1)
+            charge = charge + 1;
+        if (hours_int <= 2 && hours_int >= 1)
+            charge = charge + 2;
+        if (hours_int >= 2) {
             charge = 3;
             double last_price = 2;
 
@@ -40,16 +40,16 @@ public class ChargeCalculator {
         return charge;
     }
 
-    static double disabled(Long duration){
+    static double disabled(Long duration) {
 
-        double charge=0.0;
+        double charge = 0.0;
         Double hours = Math.ceil(duration);
         int hours_int = hours.intValue();
 
 
-        if(hours_int <= 2 && hours_int >= 1)
-            charge=charge+2;
-        if( hours_int >= 2) {
+        if (hours_int <= 2 && hours_int >= 1)
+            charge = charge + 2;
+        if (hours_int >= 2) {
             charge = 2;
             double last_price = 2;
 

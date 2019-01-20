@@ -1,123 +1,123 @@
 package com.wojtek.parkingmeter.helpers;
 
 import com.wojtek.parkingmeter.helpers.enums.TicketType;
-import com.wojtek.parkingmeter.model.Ticket;
+import com.wojtek.parkingmeter.model.TicketEntity;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
+
 import java.time.LocalDateTime;
 
 public class ChargeCalculatorTest {
 
 
-
     @Test
-    public void RegularLessThanOneHour(){
+    public void RegularLessThanOneHour() {
 
         //given
-        Ticket ticket1 = new Ticket(TicketType.REGULAR, LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,19,30,00,00));
+        TicketEntity ticketEntity1 = new TicketEntity(TicketType.REGULAR, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 19, 30, 00, 00));
 
         //when
-        ticket1.setCharge(ChargeCalculator.charge(ticket1.getTicketType(), ticket1.getDuration()));
+        ticketEntity1.setCharge(ChargeCalculator.charge(ticketEntity1.getTicketType(), ticketEntity1.getDuration()));
 
         //then
-        assertEquals(1, ticket1.getCharge(),0.001);
+        assertEquals(1, ticketEntity1.getCharge(), 0.001);
     }
 
     @Test
-    public void RegularLessThanTwoHours(){
+    public void RegularLessThanTwoHours() {
 
         //given
-        Ticket ticket2 = new Ticket(TicketType.REGULAR,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,20,01,00,00));
+        TicketEntity ticketEntity2 = new TicketEntity(TicketType.REGULAR, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 20, 01, 00, 00));
 
 
         //when
-        ticket2.setCharge(ChargeCalculator.charge(ticket2.getTicketType(),ticket2.getDuration()));
+        ticketEntity2.setCharge(ChargeCalculator.charge(ticketEntity2.getTicketType(), ticketEntity2.getDuration()));
 
         //then
-        assertEquals(3, ticket2.getCharge(),0.001);
+        assertEquals(3, ticketEntity2.getCharge(), 0.001);
     }
 
     @Test
-    public void RegularLessThanThreeHours(){
+    public void RegularLessThanThreeHours() {
 
         //given
-        Ticket ticket3 = new Ticket(TicketType.REGULAR,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,21,01,00,00));
+        TicketEntity ticketEntity3 = new TicketEntity(TicketType.REGULAR, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 21, 01, 00, 00));
 
 
         //when
-        ticket3.setCharge(ChargeCalculator.charge(ticket3.getTicketType(), ticket3.getDuration()));
+        ticketEntity3.setCharge(ChargeCalculator.charge(ticketEntity3.getTicketType(), ticketEntity3.getDuration()));
 
         //then
-        assertEquals(6, ticket3.getCharge(),0.001);
+        assertEquals(6, ticketEntity3.getCharge(), 0.001);
     }
 
 
-
     @Test
-    public void RegularLessThanFourHours(){
+    public void RegularLessThanFourHours() {
 
         //given
-        Ticket ticket4 = new Ticket(TicketType.REGULAR,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,22,01,00,00));
+        TicketEntity ticketEntity4 = new TicketEntity(TicketType.REGULAR, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 22, 01, 00, 00));
 
         //when
-        ticket4.setCharge(ChargeCalculator.charge(ticket4.getTicketType(), ticket4.getDuration()));
+        ticketEntity4.setCharge(ChargeCalculator.charge(ticketEntity4.getTicketType(), ticketEntity4.getDuration()));
 
 
         //then
-        assertEquals(10.5, ticket4.getCharge(),0.001);
+        assertEquals(10.5, ticketEntity4.getCharge(), 0.001);
     }
 
     @Test
-    public void DisabledLessThanOneHours(){
+    public void DisabledLessThanOneHours() {
 
         //given
-        Ticket ticket5 = new Ticket(TicketType.DISABLED, LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,19,30,00,00));
+        TicketEntity ticketEntity5 = new TicketEntity(TicketType.DISABLED, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 19, 30, 00, 00));
 
         //when
-        ticket5.setCharge(ChargeCalculator.charge(ticket5.getTicketType(),ticket5.getDuration()));
+        ticketEntity5.setCharge(ChargeCalculator.charge(ticketEntity5.getTicketType(), ticketEntity5.getDuration()));
 
         //then
-        assertEquals(0.0, ticket5.getCharge(),0.001);
+        assertEquals(0.0, ticketEntity5.getCharge(), 0.001);
     }
 
     @Test
-    public void DisabledLessThanTwoHours(){
+    public void DisabledLessThanTwoHours() {
 
         //given
-        Ticket ticket6 = new Ticket(TicketType.DISABLED,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,20,01,00,00));
+        TicketEntity ticketEntity6 = new TicketEntity(TicketType.DISABLED, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 20, 01, 00, 00));
 
         //when
-        ticket6.setCharge(ChargeCalculator.charge(ticket6.getTicketType(),ticket6.getDuration()));
+        ticketEntity6.setCharge(ChargeCalculator.charge(ticketEntity6.getTicketType(), ticketEntity6.getDuration()));
         //then
-        assertEquals(2.0, ticket6.getCharge(),0.001);
-
-    }
-
-    @Test
-    public void DisabledLessThanThreeHours(){
-
-        //given
-        Ticket ticket7 = new Ticket(TicketType.DISABLED,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,21,01,00,00));
-
-        //when
-        ticket7.setCharge(ChargeCalculator.charge(ticket7.getTicketType(), ticket7.getDuration()));
-        //then
-        assertEquals(4.4, ticket7.getCharge(),0.001);
+        assertEquals(2.0, ticketEntity6.getCharge(), 0.001);
 
     }
 
     @Test
-    public void DisabledLessThanFourHours(){
+    public void DisabledLessThanThreeHours() {
 
         //given
-        Ticket ticket8 = new Ticket(TicketType.DISABLED,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,22,01,00,00));
+        TicketEntity ticketEntity7 = new TicketEntity(TicketType.DISABLED, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 21, 01, 00, 00));
 
         //when
-        ticket8.setCharge(ChargeCalculator.charge(ticket8.getTicketType(), ticket8.getDuration()));
+        ticketEntity7.setCharge(ChargeCalculator.charge(ticketEntity7.getTicketType(), ticketEntity7.getDuration()));
+        //then
+        assertEquals(4.4, ticketEntity7.getCharge(), 0.001);
+
+    }
+
+    @Test
+    public void DisabledLessThanFourHours() {
+
+        //given
+        TicketEntity ticketEntity8 = new TicketEntity(TicketType.DISABLED, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 22, 01, 00, 00));
+
+        //when
+        ticketEntity8.setCharge(ChargeCalculator.charge(ticketEntity8.getTicketType(), ticketEntity8.getDuration()));
 
         //then
-        assertEquals(7.28, ticket8.getCharge(),0.001);
+        assertEquals(7.28, ticketEntity8.getCharge(), 0.001);
 
     }
 

@@ -4,8 +4,8 @@ import com.wojtek.parkingmeter.helpers.*;
 import com.wojtek.parkingmeter.helpers.enums.HasStartedEnum;
 import com.wojtek.parkingmeter.helpers.enums.TicketType;
 import com.wojtek.parkingmeter.mapper.TicketMapper;
-import com.wojtek.parkingmeter.model.Car;
-import com.wojtek.parkingmeter.model.Ticket;
+import com.wojtek.parkingmeter.model.CarEntity;
+import com.wojtek.parkingmeter.model.TicketEntity;
 
 import com.wojtek.parkingmeter.model.TicketDTO;
 import com.wojtek.parkingmeter.repositories.CarRepository;
@@ -16,7 +16,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -38,56 +37,57 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public TicketDTO startTicket(String ticket_type, String nr_plate) {
 
-        Ticket newTicket = new Ticket( TicketType.valueOf(ticket_type.toUpperCase()), LocalDateTime.now(), LocalDateTime.of(0,1,1,0,0,0,0));
-        Car car = new Car(nr_plate);
-        car.addTicket(newTicket);
-        carRepository.save(car);
+        TicketEntity newTicketEntity = new TicketEntity(TicketType.valueOf(ticket_type.toUpperCase()), LocalDateTime.now(), LocalDateTime.of(0, 1, 1, 0, 0, 0, 0));
+        CarEntity carEntity = new CarEntity(nr_plate);
+        carEntity.addTicket(newTicketEntity);
+        carRepository.save(carEntity);
 
-        ticketRepository.save(newTicket);
+        ticketRepository.save(newTicketEntity);
 
-        return ticketMapper.ticketToTicketDTO(newTicket);
+        return ticketMapper.ticketToTicketDTO(newTicketEntity);
     }
 
     @Override
-    public Ticket stopTicket(Long id) {
+    public TicketEntity stopTicket(Long id) {
 
-         Optional<Ticket> stopTicketOpt = ticketRepository.findById(id);
+        Optional<TicketEntity> stopTicketOpt = ticketRepository.findById(id);
 
-         Ticket stopTicket = stopTicketOpt.get();
+        TicketEntity stopTicketEntity = stopTicketOpt.get();
 
-         stopTicket.setStampStop(LocalDateTime.now());
+        stopTicketEntity.setStampStop(LocalDateTime.now());
 
-         stopTicket.countCharge();
+        stopTicketEntity.countCharge();
 
 
-        if(!(stopTicket.getCar()==null)) {
-            Long id_car = stopTicket.getCar().getId();
+        // gdy nie ma biletu o takim id
+
+        if (!(stopTicketEntity.getCarEntity() == null)) {
+            Long id_car = stopTicketEntity.getCarEntity().getId();
             carRepository.deleteById(id_car);
         }
 
 
+        stopTicketEntity.setCarEntity(null);
 
-        stopTicket.setCar(null);
-
-         return ticketRepository.save(stopTicket);
+        return ticketRepository.save(stopTicketEntity);
 
     }
 
     @Override
     public String checkCharge(Long id) {
 
-        Optional<Ticket> ticketOptional = ticketRepository.findById(id);
+        Optional<TicketEntity> ticketOptional = ticketRepository.findById(id);
 
 
-        Ticket ticket = ticketOptional.get();
+        TicketEntity ticketEntity = ticketOptional.get();
 
-        if(!(ticket.getCar()==null))
-            ticket.setStampStop(LocalDateTime.now());
+        if (!(ticketEntity.getCarEntity() == null))
+            ticketEntity.setStampStop(LocalDateTime.now());
 
-        TicketType ticketType = ticket.getTicketType();
+        TicketType ticketType = ticketEntity.getTicketType();
 
 
-        String charge =  Double.toString(ChargeCalculator.charge(ticketType, ticket.getDuration()));
+        String charge = Double.toString(ChargeCalculator.charge(ticketType, ticketEntity.getDuration()));
 
         return charge;
     }
@@ -95,7 +95,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public SumJSON checkSum() {
 
-        Double sum = jdbcTemplate.queryForObject("SELECT sum(charge) FROM TICKETS", Double.class );
+        Double sum = jdbcTemplate.queryForObject("SELECT sum(charge) FROM TICKETS", Double.class);
         SumJSON sumJSON = new SumJSON(sum);
 
         return sumJSON;
@@ -110,27 +110,30 @@ public class TicketServiceImpl implements TicketService {
 
         try {
             // pobierz id samochodu którego znamy numery tablicy rejestracujnej
-             id = jdbcTemplate.queryForObject(
-                    "SELECT ID FROM CARS WHERE NR_PLATE = \'"+ nr_plate +"\'", Integer.class);
-        }catch (EmptyResultDataAccessException e){
+            id = jdbcTemplate.queryForObject(
+                    "SELECT ID FROM CARS WHERE NR_PLATE = \'" + nr_plate + "\'", Integer.class);
+            if (id.equals(0))
+                hasStartedJSON.setHasStarted(HasStartedEnum.NO);
+        } catch (EmptyResultDataAccessException e) {
             hasStartedJSON.setHasStarted(HasStartedEnum.NO);
         }
 
+        if (!id.equals(0)) {
+            Integer ticketID = new Integer(0);
+            // pobierzmy id biletu takiego samochodu
+            try {
+                ticketID = jdbcTemplate.queryForObject("SELECT ID FROM TICKETS WHERE CAR_ID = " + id + "", Integer.class);
+            } catch (EmptyResultDataAccessException e) {
+                // jesli ticketID == null to znaczy że auto jest na parkingu bez biletu
+                if (ticketID.equals(0))
+                    hasStartedJSON.setHasStarted(HasStartedEnum.NO);
+                // jeśłi ticketID != null to znaczy że auto ma bilet
 
-        Integer ticketID  = new Integer(0);
-        // pobierzmy id biletu takiego samochodu
-        try {
-            ticketID = jdbcTemplate.queryForObject("SELECT ID FROM TICKETS WHERE CAR_ID = "+ id+"" ,Integer.class );
-        }catch (EmptyResultDataAccessException e){
-            // jesli ticketID == null to znaczy że auto jest na parkingu bez biletu
-            if(ticketID.equals(0))
-                hasStartedJSON.setHasStarted(HasStartedEnum.NO);
-            // jeśłi ticketID != null to znaczy że auto ma bilet
+            }
 
+            if (!ticketID.equals(0))
+                hasStartedJSON.setHasStarted(HasStartedEnum.YES);
         }
-
-        if(!ticketID.equals(0))
-            hasStartedJSON.setHasStarted(HasStartedEnum.YES);
 
         return hasStartedJSON;
     }

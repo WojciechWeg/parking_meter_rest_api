@@ -2,8 +2,8 @@ package com.wojtek.parkingmeter.bootstrap;
 
 import com.wojtek.parkingmeter.helpers.ChargeCalculator;
 import com.wojtek.parkingmeter.helpers.enums.TicketType;
-import com.wojtek.parkingmeter.model.Car;
-import com.wojtek.parkingmeter.model.Ticket;
+import com.wojtek.parkingmeter.model.CarEntity;
+import com.wojtek.parkingmeter.model.TicketEntity;
 import com.wojtek.parkingmeter.repositories.CarRepository;
 import com.wojtek.parkingmeter.repositories.TicketRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -27,70 +27,68 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-
         load_tickets();
-
 
         load_cars();
     }
 
     private void load_cars() {
-        Car car1 = new Car();
-        car1.setNr_plate("00000");
+        CarEntity carEntity1 = new CarEntity();
+        carEntity1.setNr_plate("00000");
 
-        carRepository.save(car1);
+        carRepository.save(carEntity1);
     }
 
     private void load_tickets() {
-        Ticket ticket1 = new Ticket(TicketType.REGULAR, LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,19,30,00,00));
+        TicketEntity ticketEntity1 = new TicketEntity(TicketType.REGULAR, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 19, 30, 00, 00));
 
-        ticket1.setCharge(ChargeCalculator.charge(ticket1.getTicketType(), ticket1.getDuration()));
+        ticketEntity1.setCharge(ChargeCalculator.charge(ticketEntity1.getTicketType(), ticketEntity1.getDuration()));
 
-        ticketRepository.save(ticket1);
+        ticketRepository.save(ticketEntity1);
 
-        Ticket ticket2 = new Ticket(TicketType.REGULAR,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,20,01,00,00));
+        TicketEntity ticketEntity2 = new TicketEntity(TicketType.REGULAR, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 20, 01, 00, 00));
 
-        ticket2.setCharge(ChargeCalculator.charge(ticket2.getTicketType(),ticket2.getDuration()));
+        ticketEntity2.setCharge(ChargeCalculator.charge(ticketEntity2.getTicketType(), ticketEntity2.getDuration()));
 
-        ticketRepository.save(ticket2);
-
-
-        Ticket ticket3 = new Ticket(TicketType.REGULAR,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,21,01,00,00));
-
-        ticket3.setCharge(ChargeCalculator.charge(ticket3.getTicketType(), ticket3.getDuration()));
-
-        ticketRepository.save(ticket3);
-
-        Ticket ticket4 = new Ticket(TicketType.REGULAR,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,22,01,00,00));
-
-        ticket4.setCharge(ChargeCalculator.charge(ticket4.getTicketType(), ticket4.getDuration()));
-
-        ticketRepository.save(ticket4);
+        ticketRepository.save(ticketEntity2);
 
 
-        Ticket ticket5 = new Ticket(TicketType.DISABLED, LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,19,30,00,00));
+        TicketEntity ticketEntity3 = new TicketEntity(TicketType.REGULAR, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 21, 01, 00, 00));
 
-        ticket5.setCharge(ChargeCalculator.charge(ticket5.getTicketType(),ticket5.getDuration()));
+        ticketEntity3.setCharge(ChargeCalculator.charge(ticketEntity3.getTicketType(), ticketEntity3.getDuration()));
 
-        ticketRepository.save(ticket5);
+        ticketRepository.save(ticketEntity3);
 
-        Ticket ticket6 = new Ticket(TicketType.DISABLED,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,20,01,00,00));
+        TicketEntity ticketEntity4 = new TicketEntity(TicketType.REGULAR, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 22, 01, 00, 00));
 
-        ticket6.setCharge(ChargeCalculator.charge(ticket6.getTicketType(),ticket6.getDuration()));
+        ticketEntity4.setCharge(ChargeCalculator.charge(ticketEntity4.getTicketType(), ticketEntity4.getDuration()));
 
-        ticketRepository.save(ticket6);
+        ticketRepository.save(ticketEntity4);
 
 
-        Ticket ticket7 = new Ticket(TicketType.DISABLED,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,21,01,00,00));
+        TicketEntity ticketEntity5 = new TicketEntity(TicketType.DISABLED, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 19, 30, 00, 00));
 
-        ticket7.setCharge(ChargeCalculator.charge(ticket7.getTicketType(), ticket7.getDuration()));
+        ticketEntity5.setCharge(ChargeCalculator.charge(ticketEntity5.getTicketType(), ticketEntity5.getDuration()));
 
-        ticketRepository.save(ticket7);
+        ticketRepository.save(ticketEntity5);
 
-        Ticket ticket8 = new Ticket(TicketType.DISABLED,  LocalDateTime.of(2019,1,13,19,00,00,00), LocalDateTime.of(2019,1,13,22,01,00,00));
+        TicketEntity ticketEntity6 = new TicketEntity(TicketType.DISABLED, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 20, 01, 00, 00));
 
-        ticket8.setCharge(ChargeCalculator.charge(ticket8.getTicketType(), ticket8.getDuration()));
+        ticketEntity6.setCharge(ChargeCalculator.charge(ticketEntity6.getTicketType(), ticketEntity6.getDuration()));
 
-        ticketRepository.save(ticket8);
+        ticketRepository.save(ticketEntity6);
+
+
+        TicketEntity ticketEntity7 = new TicketEntity(TicketType.DISABLED, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 21, 01, 00, 00));
+
+        ticketEntity7.setCharge(ChargeCalculator.charge(ticketEntity7.getTicketType(), ticketEntity7.getDuration()));
+
+        ticketRepository.save(ticketEntity7);
+
+        TicketEntity ticketEntity8 = new TicketEntity(TicketType.DISABLED, LocalDateTime.of(2019, 1, 13, 19, 00, 00, 00), LocalDateTime.of(2019, 1, 13, 22, 01, 00, 00));
+
+        ticketEntity8.setCharge(ChargeCalculator.charge(ticketEntity8.getTicketType(), ticketEntity8.getDuration()));
+
+        ticketRepository.save(ticketEntity8);
     }
 }

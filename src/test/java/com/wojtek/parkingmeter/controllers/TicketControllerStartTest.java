@@ -26,13 +26,13 @@ public class TicketControllerStartTest {
 
     @Test
     public void shouldReturn200Status() throws Exception {
-        this.mockMvc.perform(get("/start/regular/wn333"))
+        this.mockMvc.perform(get("/start/disabled/wn333"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void shouldReturn400Status() throws Exception {
-        this.mockMvc.perform(get("/start/regular/wn333"))
+        this.mockMvc.perform(get("/start/disabled/wn333"))
                 .andExpect(status().isImUsed())
                 .andExpect(content().json("{\"ticketType\":null,\"charge\":0.0,\"stampStart\":null,\"id\":null}"));
     }

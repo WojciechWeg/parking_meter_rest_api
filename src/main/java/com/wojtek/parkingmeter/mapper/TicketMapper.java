@@ -1,6 +1,6 @@
 package com.wojtek.parkingmeter.mapper;
 
-import com.wojtek.parkingmeter.model.Ticket;
+import com.wojtek.parkingmeter.model.TicketEntity;
 import com.wojtek.parkingmeter.model.TicketDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -10,8 +10,8 @@ public interface TicketMapper {
 
     TicketMapper INSTANCE = Mappers.getMapper(TicketMapper.class);
 
-    TicketDTO ticketToTicketDTO(Ticket ticket);
+    TicketDTO ticketToTicketDTO(TicketEntity ticketEntity);
 
-    Ticket ticketDTOToTocket(TicketDTO ticketDTO);
+    TicketEntity ticketDTOToTocket(TicketDTO ticketDTO);
 
 }
