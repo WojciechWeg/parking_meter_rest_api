@@ -14,7 +14,11 @@ Aim of this project is to build a service for managing the city parking spaces.
 * Spring boot starter test
 
 ### Setup
-Run start.sh script
+
+```
+chmod +x ./start.sh
+./start.sh
+```
 
 ### Action table
 
@@ -38,7 +42,7 @@ Values here are:
 * stampStart is start time
 * id  - duh
 
-```json
+```
 {
     "ticketType": "REGULAR",
     "charge": 0,
@@ -87,7 +91,7 @@ Null ticket:
 ### Check sum
 #### SumJSON
 
-```json
+```
 {
     "sum": 34.18
 }
@@ -103,7 +107,7 @@ Values here can be:
 * NO  if the car with given nr_plate has not started the ticket OR there is no such car.
 * INVALID_NR_PLATE if nr_plate is invalid.
 
-```json
+```
 {
     "hasStarted": "NO"
 }
