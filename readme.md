@@ -14,7 +14,11 @@ Aim of this project is to build a service for managing the city parking spaces.
 * Spring boot starter test
 
 ### Setup
-Run start.sh script
+
+```
+chmod +x ./start.sh
+./start.sh
+```
 
 ### Action table
 
