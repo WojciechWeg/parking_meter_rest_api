@@ -1,7 +1,8 @@
 jobs:
   build:
-    docker:
-      - image: circleci/openjdk:8-jdk-browsers
-    steps:   
-      - checkout
-      - run: echo "A first hellooo"
+    working_directory: ~/circleci-java-spring
+      docker:
+        - image: circleci/openjdk:8-jdk-browsers
+      steps:   
+        - checkout
+        - run: echo "A first hellooo"
