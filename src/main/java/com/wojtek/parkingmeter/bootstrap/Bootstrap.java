@@ -33,8 +33,7 @@ public class Bootstrap implements CommandLineRunner {
     }
 
     private void load_cars() {
-        CarEntity carEntity1 = new CarEntity();
-        carEntity1.setNr_plate("00000");
+        CarEntity carEntity1 = new CarEntity("00000");
 
         carRepository.save(carEntity1);
     }

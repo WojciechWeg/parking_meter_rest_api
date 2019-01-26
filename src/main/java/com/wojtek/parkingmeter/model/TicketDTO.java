@@ -2,9 +2,9 @@ package com.wojtek.parkingmeter.model;
 
 import com.wojtek.parkingmeter.helpers.enums.TicketType;
 
-
-
 import java.time.LocalDateTime;
+
+
 
 public class TicketDTO {
 

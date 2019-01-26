@@ -4,6 +4,8 @@ package com.wojtek.parkingmeter.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wojtek.parkingmeter.helpers.ChargeCalculator;
 import com.wojtek.parkingmeter.helpers.enums.TicketType;
+import lombok.Getter;
+import lombok.Setter;
 
 
 import javax.persistence.*;
@@ -12,7 +14,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tickets")
-
+@Setter
+@Getter
 public class TicketEntity {
 
     public TicketEntity() {

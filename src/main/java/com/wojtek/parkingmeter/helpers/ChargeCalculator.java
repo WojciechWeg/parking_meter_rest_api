@@ -21,18 +21,18 @@ public class ChargeCalculator {
     static double regular(Long duration) {
 
         double charge = 0.0;
-        Double hours = Math.ceil(duration);
-        int hours_int = hours.intValue();
+        //Double hours = Math.ceil(duration);
+        //int hours_int = hours.intValue();
 
-        if (hours_int <= 1)
+        if (duration <= 1)
             charge = charge + 1;
-        if (hours_int <= 2 && hours_int >= 1)
+        if (duration <= 2 && duration >= 1)
             charge = charge + 2;
-        if (hours_int >= 2) {
+        if (duration >= 2) {
             charge = 3;
             double last_price = 2;
 
-            for (int i = 2; i <= hours_int; i++) {
+            for (int i = 2; i <= duration; i++) {
                 last_price = last_price * 1.5;
                 charge = charge + last_price;
             }
